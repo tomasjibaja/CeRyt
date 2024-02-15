@@ -33,6 +33,7 @@ body {
     border: 3px solid rgb(90 160 180 / 70%);
     border-radius: 18px;
     margin: 0 auto;
+    font-family: monospace;
 }
 
 .game-wrapper {
