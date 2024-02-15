@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>CeRyt</title>
 </head>
 <body>
+    <h1 class="text-primary centered">CeRyt</h1>
+    <div id="tempo-control">
+        <input type="range" id="tempo" name="tempo" min="30" max="180" oninput="showTempo(this.value)">
+        <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
+    </div>
+    <div class="game-wrapper">
+        <div id="frame"></div>
+        <input onclick="generateCeryt()" id="btn-generar" type="button" value="Generar">
+        <input id="btn-tap" type="button" value="TAP">
+    </div>
     
+    
+    <script src="scripts.js"></script>
 </body>
 </html>
