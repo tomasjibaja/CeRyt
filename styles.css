@@ -56,17 +56,23 @@ input {
     font-size: 25px;
     color: azure;
     margin: 10px auto;
-    background-color: transparent;
+    background-color: rgb(90 160 180 / 70%);
     border-radius: 9px;
     border: 1px;
-    box-shadow: 3px 3px 9px inset,
-                -3px -3px 9px darkslategrey inset;
-    transition: all .1s ease-in;
+    box-shadow: 1px 1px 9px inset,
+                -1px -1px 7px darkslategrey inset;
+    transition: all .1s ease-in-out;
 }
 
 input:active {
-    box-shadow: 3px 3px 9px darkslategrey inset,
-                -3px -3px 9px inset;
+    box-shadow: 2px 2px 9px darkslategrey inset,
+                -2px -2px 9px inset;
+}
+
+#btn-toggle {
+    width: 120px;
+    height: 30px;
+    font-size: 16px;
 }
 
 #btn-generar {
