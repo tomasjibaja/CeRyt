@@ -10,7 +10,7 @@
 <body>
     <h1 class="text-primary centered">CeRyt</h1>
     <div id="tempo-control">
-        <input type="range" id="tempo" name="tempo" min="30" max="180" oninput="showTempo(this.value)">
+        <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
         <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
     </div>
     <div class="game-wrapper">
@@ -28,7 +28,7 @@
         </div>
     </div>
     
-    
+    <audio src="./sounds/stick.mp3" id="stick"></audio>
     <script src="scripts.js"></script>
 </body>
 </html>

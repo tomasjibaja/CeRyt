@@ -38,6 +38,7 @@ body {
     border-radius: 18px;
     margin: 0 auto;
     font-family: monospace;
+    display: flex;
 }
 
 .game-wrapper {
@@ -52,6 +53,8 @@ body {
     line-height: 150px;
     font-size: 45px;
     font-weight: 900;
+    display: inline;
+    transition: all .1s linear;
 }
 
 input {
