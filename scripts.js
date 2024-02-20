@@ -3,20 +3,28 @@
 const tapBtn = document.getElementById("btn-tap");
 const toggleButton = document.querySelector("#btn-toggle");
 const playButton = document.getElementById("btn-play");
+const genButton = document.getElementById("btn-generar");
 const timeLog = document.getElementById("time-log");
 const modal = document.querySelector(".modal");
+const score = document.getElementById("score-number");
 
 var pattern = [];
+var sequence = [];
+var taps = [];
 var globalTempo;
 var tempoM;
-var negraDuration = 1;
-var corcheaDuration = 0.5;
-var semiDuration = 0.25;
-var lastDate = null;
+var tolerance = 0;
+var delta = firstDelta = lastTap = 0;
+var negraMs = 0;
+var scoreTotal = errorRate = 0;
+var controlInterval = null;
+var currAnswer = false;
 
 var audioCtx = null;
 var buffer = null;
 var stick = document.getElementById("stick");
+var right = document.getElementById("right");
+var wrong = document.getElementById("wrong");
 
 const notasList = [
     "negra",
@@ -44,23 +52,63 @@ showTempo(document.getElementById("tempo").value);
 
 // GENERAR CELULA RITMICA
 function generateCeryt() {
-    let beat1 = notasList[Math.round(Math.random() * 4)];
-    let beat2 = notasList[Math.round(Math.random() * 4)];
-    let beat3 = notasList[Math.round(Math.random() * 4)];
-    let beat4 = notasList[Math.round(Math.random() * 4)];
+    if (currAnswer) {
+        currAnswer = false;
+        delta = firstTap = lastTap = 0;
+        emptyArray(taps);
+        frame.style.backgroundColor = "transparent";
+        tapBtn.style.zIndex = 1;
+        tapBtn.style.opacity = 1;
+    }
+    let beat1 = notasList[Math.round(Math.random() * 1)];
+    let beat2 = notasList[Math.round(Math.random() * 1)];
+    let beat3 = notasList[Math.round(Math.random() * 1)];
+    let beat4 = notasList[Math.round(Math.random() * 1)];
     pattern = [beat1, beat2, beat3, beat4];
+    updateSequence();
     document.getElementById("frame").innerHTML = 
         `<p class="ceryt">${notas[beat1]}</p>
         <p class="ceryt">${notas[beat2]}</p>
         <p class="ceryt">${notas[beat3]}</p>
         <p class="ceryt">${notas[beat4]}</p>`;
-    // document.getElementById("frame").innerHTML = `<p class="ceryt">${notas[beat1]} ${notas[beat2]} ${notas[beat3]} ${notas[beat4]}</p>`;
+    genButton.value = "Generar";
+    genButton.classList.remove("continuar");
+}
+
+function updateSequence() {
+    emptyArray(sequence);
+    pattern.forEach(elem => {
+        switch (elem) {
+            case "negra":
+                sequence.push(1);
+                break;
+            case "doblecorchea":
+                sequence.push(0.5,0.5);
+                break;
+            case "semis":
+                sequence.push(0.25,0.25,0.25,0.25);
+                break;
+            case "semiCor":
+                sequence.push(0.25,0.25,0.5);
+                break;
+            case "corSemi":
+                sequence.push(0.5,0.25,0.25);
+                break;
+        }
+    })
+}
+
+function emptyArray(array) {
+    while (array.length > 0) {
+        array.pop();
+    }
 }
 
 function stickPlay(delay) {
     delay ??= 0;
     let source = audioCtx.createBufferSource();
     source.buffer = buffer;
+    source.playbackRate.setValueAtTime(1, audioCtx.currentTime);
     source.connect(audioCtx.destination);
     source.start(audioCtx.currentTime + delay);
 }
@@ -147,33 +195,106 @@ playButton.addEventListener(
     false,
   );
 
+function checkPattern() {
+    let currTap = new Date();
+    if (sequence.length - 2 == taps.length) {
+        delta = currTap - lastTap;
+        lastTap = currTap;
+        taps.push(delta);
+        checkTaps();
+    }
+    if (lastTap == 0) {
+        lastTap = new Date();
+        tapBtn.style.backgroundColor = "limegreen";
+        return;
+    } else if (delta == 0) {
+        delta = currTap - lastTap;
+        lastTap = currTap;
+        firstDelta = delta;
+        setNegraDuration(firstDelta);
+        taps.push(delta);
+        controlInterval = setInterval(checkDelta, 500);
+    } else {
+        delta = currTap - lastTap;
+        lastTap = currTap;
+        taps.push(delta);
+    }
+}
+
+function checkTaps() {
+    let check = true;
+    for (let i = 0; i < taps.length; i++) {
+        let error = Math.abs(taps[i] - (sequence[i]) * negraMs);
+        errorRate += error;
+        check = (check && (error < tolerance));
+    }
+    if (check) {
+        rightAnswer()
+    } else {wrongAnswer()}
+}
+
+function setNegraDuration(ms) {
+    switch (sequence[0]) {
+        case 1:
+            negraMs = ms;
+            tolerance = negraMs * 0.25;
+            break;
+        case 0.5:
+            negraMs = ms * 2;
+            tolerance = negraMs * 0.25;
+            break;
+        case 0.25:
+            negraMs = ms * 4;
+            tolerance = negraMs * 0.25;
+            break;
+    }
+}
+
+function checkDelta() {
+    let currDate = new Date();
+    if ((currDate - lastTap) > 2000 && !(currAnswer)) {
+        wrongAnswer();
+        clearInterval(controlInterval);
+        tapBtn.style.backgroundColor = "transparent";
+    }
+}
+
+function wrongAnswer() {
+    delta = firstTap = lastTap = 0;
+    emptyArray(taps);
+    wrong.play();
+    frame.style.backgroundColor = "rgb(250 9 9 / 70%)";
+    setTimeout(() => {
+        frame.style.backgroundColor = "transparent";
+    }, 500);
+}
+
+function rightAnswer() {
+    right.play();
+    scoreTotal += 300;
+    frame.style.backgroundColor = "rgb(9 250 9 / 50%)";
+    genButton.value = "Continuar";
+    genButton.classList.add("continuar");
+    tapBtn.style.zIndex = -1;
+    tapBtn.style.opacity = 0;
+    score.innerHTML = Math.round(scoreTotal - errorRate / 2);
+    currAnswer = true;
+    clearInterval(controlInterval);
+}
+
 tapBtn.addEventListener("mousedown",
     () => {
-        let delta = 0;
         stickPlay();
-        if (lastDate == null) {
-            lastDate = new Date();
-        } else {
-            let currDate = new Date();
-            delta = currDate - lastDate;
-            console.log(delta);
-            lastDate = currDate;
+        if (pattern.length != 0) {
+            checkPattern();
         }
     });
 
 window.addEventListener("keydown",
     (event) => {
-        if (event.key == " ") {
-            let delta = 0;
-            stickPlay();
-            if (lastDate == null) {
-                lastDate = new Date();
-            } else {
-                let currDate = new Date();
-                delta = currDate - lastDate;
-                console.log(delta);
-                lastDate = currDate;
-            }
+        stickPlay();
+        if (pattern.length != 0) {
+            checkPattern();
         }
     }
 );

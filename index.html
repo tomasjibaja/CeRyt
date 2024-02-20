@@ -10,6 +10,7 @@
 <body>
     <h1 class="text-primary centered">CeRyt</h1>
     <div id="tempo-control">
+        <h4 class="score centered text-primary">SCORE: <span id="score-number"></span></h4>
         <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
         <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
     </div>
@@ -29,6 +30,8 @@
     </div>
     
     <audio src="./sounds/stick.mp3" id="stick"></audio>
+    <audio src="./sounds/right.mp3" id="right"></audio>
+    <audio src="./sounds/wrong.mp3" id="wrong"></audio>
     <script src="scripts.js"></script>
 </body>
 </html>
