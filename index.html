@@ -22,16 +22,27 @@
         <p id="time-log"></p>
     </div>
 
+    <h2 class="centered text-primary" id="level-sign">LEVEL UP</h2>
+
     <div class="modal">
         <div class="modal-msg">
             <h2 style="text-align: center;">Wanna play <span class="text-primary">CeRyt</span>?</h2>
             <input type="button" id="btn-toggle" value="Play CeRyt">
         </div>
     </div>
+
+    <div id="win-bkg"></div>
+    <div id="win-modal">
+        <h2 class="centered text-primary">GANASTE!</h2>
+        <h5 id="final-score" class="centered text-primary"></h5>
+        <input onclick="location.reload()" style="padding: 9px" type="button" value="Jugar de nuevo">
+    </div>
     
     <audio src="./sounds/stick.mp3" id="stick"></audio>
     <audio src="./sounds/right.mp3" id="right"></audio>
     <audio src="./sounds/wrong.mp3" id="wrong"></audio>
+    <audio src="./sounds/levelup.mp3" id="level-up"></audio>
+    <audio src="./sounds/win.mp3" id="win"></audio>
     <script src="scripts.js"></script>
 </body>
 </html>

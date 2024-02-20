@@ -7,6 +7,10 @@ const genButton = document.getElementById("btn-generar");
 const timeLog = document.getElementById("time-log");
 const modal = document.querySelector(".modal");
 const score = document.getElementById("score-number");
+const finalScore = document.getElementById("final-score");
+const levelSign = document.getElementById("level-sign");
+const winBkg = document.getElementById("win-bkg");
+const winModal = document.getElementById("win-modal");
 
 var pattern = [];
 var sequence = [];
@@ -14,17 +18,20 @@ var taps = [];
 var globalTempo;
 var tempoM;
 var tolerance = 0;
-var delta = firstDelta = lastTap = 0;
+var delta = firstDelta = lastTap = sequenceIndex = 0;
 var negraMs = 0;
 var scoreTotal = errorRate = 0;
 var controlInterval = null;
 var currAnswer = false;
+var variantes = level = 1;
 
 var audioCtx = null;
 var buffer = null;
 var stick = document.getElementById("stick");
 var right = document.getElementById("right");
 var wrong = document.getElementById("wrong");
+var levelup = document.getElementById("level-up");
+var winSound = document.getElementById("win");
 
 const notasList = [
     "negra",
@@ -60,10 +67,10 @@ function generateCeryt() {
         tapBtn.style.zIndex = 1;
         tapBtn.style.opacity = 1;
     }
-    let beat1 = notasList[Math.round(Math.random() * 1)];
-    let beat2 = notasList[Math.round(Math.random() * 1)];
-    let beat3 = notasList[Math.round(Math.random() * 1)];
-    let beat4 = notasList[Math.round(Math.random() * 1)];
+    let beat1 = notasList[Math.round(Math.random() * variantes)];
+    let beat2 = notasList[Math.round(Math.random() * variantes)];
+    let beat3 = notasList[Math.round(Math.random() * variantes)];
+    let beat4 = notasList[Math.round(Math.random() * variantes)];
     pattern = [beat1, beat2, beat3, beat4];
     updateSequence();
     document.getElementById("frame").innerHTML = 
@@ -197,13 +204,12 @@ playButton.addEventListener(
 
 function checkPattern() {
     let currTap = new Date();
+    let check = true;
     if (sequence.length - 2 == taps.length) {
         delta = currTap - lastTap;
         lastTap = currTap;
-        taps.push(delta);
-        checkTaps();
-    }
-    if (lastTap == 0) {
+        checkTaps(check);
+    } else if (lastTap == 0) {
         lastTap = new Date();
         tapBtn.style.backgroundColor = "limegreen";
         return;
@@ -214,20 +220,25 @@ function checkPattern() {
         setNegraDuration(firstDelta);
         taps.push(delta);
         controlInterval = setInterval(checkDelta, 500);
+        check = checkTap(delta, sequenceIndex);
     } else {
         delta = currTap - lastTap;
         lastTap = currTap;
         taps.push(delta);
+        check = checkTap(delta, sequenceIndex);
     }
 }
 
-function checkTaps() {
-    let check = true;
-    for (let i = 0; i < taps.length; i++) {
-        let error = Math.abs(taps[i] - (sequence[i]) * negraMs);
-        errorRate += error;
-        check = (check && (error < tolerance));
-    }
+function checkTap(ms, i) {
+    let error = Math.abs(ms - (sequence[i]) * negraMs);
+    sequenceIndex++;
+    errorRate += error;
+    if (error < tolerance) {
+        return true;
+    }   else {wrongAnswer()}
+}
+
+function checkTaps(check) {
     if (check) {
         rightAnswer()
     } else {wrongAnswer()}
@@ -237,15 +248,15 @@ function setNegraDuration(ms) {
     switch (sequence[0]) {
         case 1:
             negraMs = ms;
-            tolerance = negraMs * 0.25;
+            tolerance = negraMs * 0.2;
             break;
         case 0.5:
             negraMs = ms * 2;
-            tolerance = negraMs * 0.25;
+            tolerance = negraMs * 0.2;
             break;
         case 0.25:
             negraMs = ms * 4;
-            tolerance = negraMs * 0.25;
+            tolerance = negraMs * 0.2;
             break;
     }
 }
@@ -260,6 +271,14 @@ function checkDelta() {
 }
 
 function wrongAnswer() {
+    tapBtn.style.opacity = 0;
+    tapBtn.style.zIndex = -1;
+    setTimeout(() => {
+        tapBtn.style.opacity = 1;
+        tapBtn.style.zIndex = 1;
+    }, 1000);
+    clearInterval(controlInterval);
+    sequenceIndex = 0;
     delta = firstTap = lastTap = 0;
     emptyArray(taps);
     wrong.play();
@@ -271,15 +290,55 @@ function wrongAnswer() {
 
 function rightAnswer() {
     right.play();
-    scoreTotal += 300;
+    scoreTotal += Math.round(300 - errorRate / 2);
+    errorRate = 0;
     frame.style.backgroundColor = "rgb(9 250 9 / 50%)";
     genButton.value = "Continuar";
     genButton.classList.add("continuar");
     tapBtn.style.zIndex = -1;
     tapBtn.style.opacity = 0;
-    score.innerHTML = Math.round(scoreTotal - errorRate / 2);
+    score.innerHTML = scoreTotal;
     currAnswer = true;
     clearInterval(controlInterval);
+    sequenceIndex = 0;
+    updateLevel();
+}
+
+function updateLevel() {
+    if (scoreTotal > 3000 && level == 3) {
+        win();
+    } else if (scoreTotal > 2000 && level < 3) {
+        variantes = level = 3;
+        document.body.style.backgroundImage =
+        "linear-gradient(45deg, fuchsia, tomato, indianred)";
+        levelUp();
+    } else if (scoreTotal > 1000 && level < 2) {
+        variantes = level = 2;
+        document.body.style.backgroundImage =
+        "linear-gradient(45deg, goldenrod, orange, crimson)";
+        levelUp();
+    }
+}
+
+function win() {
+    winSound.play();
+    finalScore.innerHTML = `PUNTAJE: ${scoreTotal}`;
+    winBkg.style.zIndex = 1;
+    winBkg.style.opacity = 1;
+    winModal.style.zIndex = 2;
+    winModal.style.opacity = 1;
+}
+
+function levelUp() {
+    levelup.play();
+    levelSign.style.opacity = 1;
+    levelSign.style.transform = "scale(8) translateY(-12vh)";
+    setTimeout(() => {
+        levelSign.style.opacity = 0;
+    }, 900);
+    setTimeout(() => {
+        levelSign.style.transform = "scale(1) translateY(0)";
+    }, 1600);
 }
 
 tapBtn.addEventListener("mousedown",

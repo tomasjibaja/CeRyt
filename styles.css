@@ -34,7 +34,8 @@ h1 {
 
 body {
     background-image: linear-gradient(45deg, rgb(90 150 200 / 100%), rgb(120 180 180 / 100%), crimson);
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
 }
 
 #frame {
@@ -113,8 +114,13 @@ input:active {
 #btn-tap {
     width: 120px;
     height: 100px;
-    transition: all .3s ease-in-out;
+    transition: all .01s ease-in-out;
     touch-action: manipulation;
+}
+
+#level-sign {
+    transition: all .9s ease-in-out;
+    opacity: 0;
 }
 
 .modal {
@@ -140,6 +146,45 @@ input:active {
     align-items: center;
     justify-content: center;
     border-radius: 9px;
+}
+
+#win-bkg {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 500vw;
+    height: 100vh;
+    background-image: linear-gradient(45deg,
+        turquoise, orchid, 
+        tomato, indianred,
+        goldenrod, crimson
+    );
+    animation: movingBkg 60s linear infinite;
+    transition: all .7s ease-in-out;
+    z-index: -1;
+}
+
+#win-modal {
+    opacity: 0;
+    font-size: 45px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all .7s ease-in-out;
+    z-index: -1;
+}
+
+@keyframes movingBkg {
+    0%{transform: translateX(-400vw)}
+    50%{transform: translateX(0)}
+    100%{transform: translateX(-400vw)}
 }
 
 @media only screen and (min-width: 768px) {
