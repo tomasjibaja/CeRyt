@@ -1,16 +1,69 @@
 html {
-    font-family: sans-serif;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: content-box;
+    overflow: hidden;
 }
 
 .text-primary {
-    color: rgb(230 230 250);
+    color: rgb(250 250 250);
 }
 
 .centered {
     text-align: center;
+}
+
+.shining {
+    filter: drop-shadow(0 0 1px black);
+    animation: shine 3s linear infinite;
+    animation: glit 4.5s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(-3px -3px 3px azure);
+    }
+    25% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(3px -3px 7px azure);
+    }
+    50% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(3px 3px 5px azure);
+    }
+    75% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(-3px 3px 7px azure);
+    }
+    100% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(-3px -3px 3px azure);
+    }
+}
+
+@keyframes glit {
+    0% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(3px -3px 5px ghostwhite);
+    }
+    25% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(3px 3px 9px ghostwhite);
+    }
+    50% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(-3px 3px 7px ghostwhite);
+    }
+    75% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(-3px -3px 9px ghostwhite);
+    }
+    100% {
+        filter: drop-shadow(0 0 1px black)
+                drop-shadow(3px -3px 5px ghostwhite);
+    }
 }
 
 #tempo-control {
@@ -22,10 +75,22 @@ html {
     font-size: 25px;
 }
 
+#logo {
+    display: inline;
+    margin-left: 20px;
+}
+
+#iso {
+    width: 50px;
+    transform: translateY(14px);
+}
+
+
 .score {
+    display: inline;
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 30px;
+    top: 10px;
 }
 
 h1 {
@@ -35,18 +100,18 @@ h1 {
 body {
     background-image: linear-gradient(45deg, rgb(90 150 200 / 100%), rgb(120 180 180 / 100%), crimson);
     height: 100vh;
-    overflow: hidden;
 }
 
 #frame {
     width: 300px;
     height: 150px;
-    border: 3px solid rgb(90 160 180 / 70%);
+    border: 3px solid rgb(250 250 250);
     border-radius: 18px;
     margin: 20px auto;
     font-family: monospace;
     display: flex;
     transition: all .3s ease-in-out;
+    box-shadow: 0 0 12px 7px rgb(200 200 200 / 50%);
 }
 
 .game-wrapper {
@@ -66,11 +131,12 @@ body {
 }
 
 input {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     display: block;
     text-align: center;
     font-size: 25px;
     color: azure;
-    margin: 10px auto;
+    margin: 18px auto;
     background-color: rgb(90 160 180 / 70%);
     border-radius: 9px;
     border: 1px;
@@ -85,8 +151,8 @@ input:active {
 }
 
 #btn-toggle {
-    width: 120px;
-    height: 30px;
+    width: 150px;
+    height: 45px;
     font-size: 16px;
 }
 
@@ -121,12 +187,13 @@ input:active {
 #level-sign {
     transition: all .9s ease-in-out;
     opacity: 0;
+    font-size: 20px;
 }
 
 .modal {
     width: 100vw;
-    height: 100vh;
-    background-color: rgb(9 9 9 / 50%);
+    height: 105vh;
+    background-color: rgb(9 9 9 / 70%);
     position: absolute;
     left: 0;
     top: 0;
@@ -139,13 +206,24 @@ input:active {
 
 .modal-msg {
     width: 300px;
-    height: 200px;
+    height: 300px;
     background-color: rgb(160 180 200 / 90%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     border-radius: 9px;
+}
+
+#modal-img {
+    width: 160px;
+    animation: jump 3s linear infinite;
+}
+
+@keyframes jump {
+    0% {transform: translateY(0) scale(1);}
+    70% {transform: translateY(-7px) scale(1.1);}
+    100% {transform: translateY(0) scale(1);}
 }
 
 #win-bkg {
@@ -167,7 +245,7 @@ input:active {
 
 #win-modal {
     opacity: 0;
-    font-size: 45px;
+    font-size: 25px;
     position: absolute;
     left: 0;
     top: 0;
@@ -180,6 +258,8 @@ input:active {
     transition: all .7s ease-in-out;
     z-index: -1;
 }
+
+
 
 @keyframes movingBkg {
     0%{transform: translateX(-400vw)}
@@ -201,6 +281,17 @@ input:active {
     .ceryt {
         line-height: 250px;
         font-size: 90px;
+    }
+
+    #win-modal {
+        font-size: 45px;
+        height: 100vh;
+    }
+
+    #level-sign {
+        transition: all .9s ease-in-out;
+        opacity: 0;
+        font-size: 45px;
     }
     
 }

@@ -8,9 +8,14 @@
     <title>CeRyt</title>
 </head>
 <body>
-    <h1 class="text-primary centered">CeRyt</h1>
+    
+    <div class="banner">
+        <h1 id="logo" class="text-primary">CeRyt</h1>
+        <img id="iso" src="/img/drumstickCross.png" alt="palillos cruzados">
+        <h4 class="score text-primary">SCORE <br><span id="score-number"></span></h4>
+    </div>
     <div id="tempo-control">
-        <h4 class="score centered text-primary">SCORE: <span id="score-number"></span></h4>
+        
         <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
         <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
     </div>
@@ -26,8 +31,9 @@
 
     <div class="modal">
         <div class="modal-msg">
-            <h2 style="text-align: center;">Wanna play <span class="text-primary">CeRyt</span>?</h2>
-            <input type="button" id="btn-toggle" value="Play CeRyt">
+            <h2 style="text-align: center;">¿Querés jugar <span class="text-primary shining">CeRyt</span>?</h2>
+            <img id="modal-img" src="/img/drumstickCross.png" alt="palillos cruzados">
+            <input type="button" id="btn-toggle" value="Jugar CeRyt &#9658;">
         </div>
     </div>
 
