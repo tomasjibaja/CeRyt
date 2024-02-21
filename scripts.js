@@ -5,17 +5,24 @@ const toggleButton = document.querySelector("#btn-toggle");
 const playButton = document.getElementById("btn-play");
 const genButton = document.getElementById("btn-generar");
 const modal = document.querySelector(".modal");
+const tutoCtrl = document.getElementById("tuto-control");
+const tutoBtn = document.getElementById("btn-tuto");
+const tutoPrev = document.getElementById("prev");
+const tutoNext = document.getElementById("next");
+const tutoWindow = document.getElementById("tuto-window");
 const score = document.getElementById("score-number");
 const finalScore = document.getElementById("final-score");
 const levelSign = document.getElementById("level-sign");
 const winBkg = document.getElementById("win-bkg");
 const winModal = document.getElementById("win-modal");
-
+    
 var pattern = [];
 var sequence = [];
 var taps = [];
 var tapDates = [];
 var ceryt = [];
+let page = 0;
+
 let waves = document.querySelectorAll(".wave");
 var globalTempo;
 var tempoM;
@@ -51,6 +58,14 @@ const notas = {
     semiCor : "&#9836;&#9834;",
     corSemi : "&#9834;&#9836;"
 }
+
+let pages = ["Este botón genera un ritmo de cuatro pulsos",
+            "Esta ventana muestra el ritmo creado",
+            "Este botón es para que toques el ritmo",
+            `Este botón te permite escuchar el ritmo antes de tocarlo
+            (podés cambiar la velocidad con la barra de tempo)`];
+
+tutoWindow.innerHTML = pages[page];
 
 // ACTUALIZACION DE TEMPO
 function showTempo(valor) {
@@ -372,9 +387,35 @@ function levelUp() {
     }, 1500);
 }
 
+function tutorial() {
+    tutoBtn.innerHTML = "CERRAR";
+    tutoBtn.style.color = "white";
+}
+
+tutoPrev.addEventListener("click",
+    () => {
+        if (page > 0) {
+            page--;
+            tutoWindow.innerHTML = pages[page];
+        }
+    });
+
+tutoNext.addEventListener("click",
+    () => {
+        if (page < pages.length - 1) {
+            page++;
+            tutoWindow.innerHTML = pages[page];
+        }
+    });
+
 tapBtn.addEventListener("mousedown",
     () => {
         stickPlay();
         checkPattern();
     });
 
+tutoBtn.addEventListener("click",
+    () => {
+        tutorial();
+    }
+    );

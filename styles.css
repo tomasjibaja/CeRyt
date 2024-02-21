@@ -131,8 +131,23 @@ h1 {
     font-size: 45px;
     font-weight: 900;
     display: inline;
-    transition: all .2s linear;
     user-select: none;
+}
+
+.ceryt:nth-child(1) {
+    transition: transform .3s linear, color .2s linear;
+}
+
+.ceryt:nth-child(2) {
+    transition: transform .5s linear, color .2s linear;
+}
+
+.ceryt:nth-child(3) {
+    transition: transform .65s linear, color .2s linear;
+}
+
+.ceryt:nth-child(4) {
+    transition: transform .75s linear, color .2s linear;
 }
 
 .flip {
@@ -167,7 +182,7 @@ input {
     font-size: 25px;
     color: azure;
     margin: 9px auto;
-    background-color: rgb(90 160 180 / 70%);
+    background-color: rgb(30 90 90 / 18%);
     border-radius: 9px;
     border: 1px;
     box-shadow: 1px 1px 9px inset,
@@ -339,6 +354,49 @@ input:active {
     font-size: 18px;
     padding: 18px;
     background-color: rgb(120 180 180 / 50%);
+}
+
+#tuto-control {
+    position: absolute;
+    width: 72vw;
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#btn-tuto {
+    color: rgb(250 250 250 / 70%);
+    line-height: 50px;
+}
+
+#tuto-window {
+    width: 72vw;
+    border-radius: 7px;
+    background-color: rgb(250 250 250 / 70%);
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 27px;
+    padding: 18px;
+    color: rgb(90 150 200 / 100%);
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 9vh;
+}
+
+#prev, #next {
+    color: white;
+    font-size: 40px;
+    font-weight: 900;
+    padding: 9px;
+    border-radius: 3px;
 }
 
 @media only screen and (min-width: 768px) {
