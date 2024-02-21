@@ -6,6 +6,36 @@ html {
     overflow: hidden;
 }
 
+body {
+    background-image: linear-gradient(45deg, rgb(90 150 200 / 100%), rgb(120 180 180 / 100%), crimson);
+    height: 100vh;
+    user-select: none;
+}
+
+h1 {
+    margin: 50px auto;
+}
+
+input {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: block;
+    text-align: center;
+    font-size: 25px;
+    color: azure;
+    margin: 18px auto;
+    background-color: rgb(90 160 180 / 70%);
+    border-radius: 9px;
+    border: 1px;
+    box-shadow: 1px 1px 9px inset,
+                -1px -1px 7px darkslategrey inset;
+    transition: all .1s ease-in-out;
+}
+
+input:active {
+    box-shadow: 2px 2px 9px darkslategrey inset,
+                -2px -2px 9px inset;
+}
+
 .text-primary {
     color: rgb(250 250 250);
 }
@@ -85,21 +115,11 @@ html {
     transform: translateY(14px);
 }
 
-
 .score {
     display: inline;
     position: absolute;
     right: 30px;
     top: 10px;
-}
-
-h1 {
-    margin: 50px auto;
-}
-
-body {
-    background-image: linear-gradient(45deg, rgb(90 150 200 / 100%), rgb(120 180 180 / 100%), crimson);
-    height: 100vh;
 }
 
 #frame {
@@ -128,26 +148,6 @@ body {
     font-weight: 900;
     display: inline;
     transition: all .1s linear;
-}
-
-input {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    display: block;
-    text-align: center;
-    font-size: 25px;
-    color: azure;
-    margin: 18px auto;
-    background-color: rgb(90 160 180 / 70%);
-    border-radius: 9px;
-    border: 1px;
-    box-shadow: 1px 1px 9px inset,
-                -1px -1px 7px darkslategrey inset;
-    transition: all .1s ease-in-out;
-}
-
-input:active {
-    box-shadow: 2px 2px 9px darkslategrey inset,
-                -2px -2px 9px inset;
 }
 
 #btn-toggle {
@@ -231,7 +231,7 @@ input:active {
     position: absolute;
     left: 0;
     top: 0;
-    width: 500vw;
+    width: 100vw;
     height: 100vh;
     background-image: linear-gradient(45deg,
         turquoise, orchid, 
@@ -258,8 +258,6 @@ input:active {
     transition: all .7s ease-in-out;
     z-index: -1;
 }
-
-
 
 @keyframes movingBkg {
     0%{transform: translateX(-400vw)}

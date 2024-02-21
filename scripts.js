@@ -325,6 +325,7 @@ function win() {
     finalScore.innerHTML = `PUNTAJE: ${scoreTotal}`;
     winBkg.style.zIndex = 1;
     winBkg.style.opacity = 1;
+    winBkg.style.width = "500vw";
     winModal.style.zIndex = 2;
     winModal.style.opacity = 1;
 }
