@@ -28,14 +28,6 @@
 
     <h2 class="centered text-primary" id="level-sign">LEVEL UP</h2>
 
-    <div class="modal">
-        <div class="modal-msg">
-            <h2 style="text-align: center;">¿Querés jugar <span class="text-primary shining">CeRyt</span>?</h2>
-            <img id="modal-img" src="/img/drumstickCross.png" alt="palillos cruzados">
-            <input type="button" id="btn-toggle" value="Jugar CeRyt &#9658;">
-        </div>
-    </div>
-
     <div id="win-bkg"></div>
     <div id="win-modal">
         <div id="waves">
@@ -54,10 +46,21 @@
         <input id="reload" onclick="location.reload()" type="button" value="Jugar de nuevo">
     </div>
     
+    <div id="tuto-layer"></div>
     <div id="tuto-control">
         <p id="tuto-window"></p>
         <h3 id="btn-tuto">TUTORIAL</h3>
+        <h3 id="curr-page"></h3>
         <span id="prev">&#8619;</span><span id="next">&#8620;</span>
+        <h3 id="btn-ok">OK</h3>
+    </div>
+
+    <div class="modal">
+        <div class="modal-msg">
+            <h2 style="text-align: center;">¿Querés jugar <span class="text-primary shining">CeRyt</span>?</h2>
+            <img id="modal-img" src="/img/drumstickCross.png" alt="palillos cruzados">
+            <input type="button" id="btn-toggle" value="Jugar CeRyt &#9658;">
+        </div>
     </div>
     
     <audio src="./sounds/stick.mp3" id="stick"></audio>

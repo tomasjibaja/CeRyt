@@ -9,7 +9,10 @@ const tutoCtrl = document.getElementById("tuto-control");
 const tutoBtn = document.getElementById("btn-tuto");
 const tutoPrev = document.getElementById("prev");
 const tutoNext = document.getElementById("next");
+const currPage = document.getElementById("curr-page");
+const tutoOk = document.getElementById("btn-ok");
 const tutoWindow = document.getElementById("tuto-window");
+const tutoLayer = document.getElementById("tuto-layer");
 const score = document.getElementById("score-number");
 const finalScore = document.getElementById("final-score");
 const levelSign = document.getElementById("level-sign");
@@ -21,9 +24,9 @@ var sequence = [];
 var taps = [];
 var tapDates = [];
 var ceryt = [];
-let page = 0;
+var page = 0;
 
-let waves = document.querySelectorAll(".wave");
+var waves = document.querySelectorAll(".wave");
 var globalTempo;
 var tempoM;
 var tolerance = 0;
@@ -66,6 +69,7 @@ let pages = ["Este botón genera un ritmo de cuatro pulsos",
             (podés cambiar la velocidad con la barra de tempo)`];
 
 tutoWindow.innerHTML = pages[page];
+currPage.innerHTML = `${page + 1} / 4`;
 
 // ACTUALIZACION DE TEMPO
 function showTempo(valor) {
@@ -388,8 +392,23 @@ function levelUp() {
 }
 
 function tutorial() {
-    tutoBtn.innerHTML = "CERRAR";
-    tutoBtn.style.color = "white";
+    removeBlink();
+    updateBlink();
+    tutoBtn.style.color = "rgb(250 250 250 / 30%)";
+    tutoWindow.style.transform = "translateY(0)";
+    tutoPrev.style.transform = "translateY(0)";
+    tutoNext.style.transform = "translateY(0)";
+    tutoOk.style.transform = "translateY(0)";
+    currPage.style.transform = "translateY(0)";
+    tutoLayer.style.zIndex = "inherit";
+    tutoLayer.style.opacity = 1;
+}
+
+function removeBlink() {
+    tapBtn.classList.remove("blink");
+    genButton.classList.remove("blink");
+    playButton.classList.remove("blink");
+    frame.classList.remove("blink");
 }
 
 tutoPrev.addEventListener("click",
@@ -397,6 +416,8 @@ tutoPrev.addEventListener("click",
         if (page > 0) {
             page--;
             tutoWindow.innerHTML = pages[page];
+            currPage.innerHTML = `${page + 1} / 4`;
+            updateBlink();
         }
     });
 
@@ -405,7 +426,40 @@ tutoNext.addEventListener("click",
         if (page < pages.length - 1) {
             page++;
             tutoWindow.innerHTML = pages[page];
+            currPage.innerHTML = `${page + 1} / 4`;
+            updateBlink();
         }
+    });
+
+function updateBlink() {
+    removeBlink();
+    switch (page) {
+        case 0:
+            genButton.classList.add("blink");
+            break;
+        case 1:
+            frame.classList.add("blink");
+            break;
+        case 2:
+            tapBtn.classList.add("blink");
+            break;
+        case 3:
+            playButton.classList.add("blink");
+            break;
+    }
+}
+ 
+tutoOk.addEventListener("click",
+    () => {
+        tutoWindow.style.transform = "translateY(250px)";
+        tutoPrev.style.transform = "translateY(100px)";
+        tutoNext.style.transform = "translateY(100px)";
+        tutoOk.style.transform = "translateY(100px)";
+        currPage.style.transform = "translateY(100px)";
+        tutoBtn.style.color = "white";
+        removeBlink();
+        tutoLayer.style.zIndex = "-1";
+        tutoLayer.style.opacity = 0;
     });
 
 tapBtn.addEventListener("mousedown",

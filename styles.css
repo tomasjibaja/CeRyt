@@ -356,9 +356,26 @@ input:active {
     background-color: rgb(120 180 180 / 50%);
 }
 
+#tuto-layer {
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(
+        to bottom,
+        transparent,
+        transparent,
+        rgba(9,9,9,.5)
+        );
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    opacity: 0;
+    transition: all .7s ease;
+}
+
 #tuto-control {
     position: absolute;
-    width: 72vw;
+    width: 339px;
     position: fixed;
     margin: auto;
     left: 0;
@@ -371,24 +388,48 @@ input:active {
 }
 
 #btn-tuto {
-    color: rgb(250 250 250 / 70%);
+    color: white;
     line-height: 50px;
+    transition: all .7s ease;
+}
+
+#curr-page {
+    color: white;
+    line-height: 50px;
+    font-size: 12px;
+    font-weight: 300;
+    transition: all .7s ease;
+    transform: translateY(100px);
+}
+
+
+#btn-ok {
+    color: white;
+    line-height: 50px;
+    padding: 0 12px;
+    border-radius: 3px;
+    border: 3px solid rgb(250 250 250 / 30%);
+    transform: translateY(100px);
+    transition: all .7s ease;
 }
 
 #tuto-window {
-    width: 72vw;
+    width: 300px;
+    border: 3px solid rgb(250 250 250 / 30%);
     border-radius: 7px;
-    background-color: rgb(250 250 250 / 70%);
+    background-color: rgb(30 90 90 / 18%);
     font-weight: 300;
     font-size: 21px;
     line-height: 27px;
     padding: 18px;
-    color: rgb(90 150 200 / 100%);
+    color: white;
     position: fixed;
     margin: auto;
     left: 0;
     right: 0;
     bottom: 9vh;
+    transform: translateY(250px);
+    transition: all .7s ease;
 }
 
 #prev, #next {
@@ -397,6 +438,8 @@ input:active {
     font-weight: 900;
     padding: 9px;
     border-radius: 3px;
+    transform: translateY(100px);
+    transition: all .7s ease;
 }
 
 @media only screen and (min-width: 768px) {
