@@ -94,9 +94,8 @@ function generateCeryt() {
         elem.classList.add("flip");
         setTimeout(() => {
             elem.classList.remove("flip")
-        }, 100);
-    })
-    emptyArray(ceryt);
+        }, 200);
+    });
 }
 
 function updateSequence() {

@@ -131,23 +131,8 @@ h1 {
     font-size: 45px;
     font-weight: 900;
     display: inline;
+    transition: all .2s linear;
     user-select: none;
-}
-
-.ceryt:nth-child(1) {
-    transition: all .4s linear;
-}
-
-.ceryt:nth-child(2) {
-    transition: all .5s linear;
-}
-
-.ceryt:nth-child(3) {
-    transition: all .6s linear;
-}
-
-.ceryt:nth-child(4) {
-    transition: all .7s linear;
 }
 
 .flip {
