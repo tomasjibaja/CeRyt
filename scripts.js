@@ -4,7 +4,6 @@ const tapBtn = document.getElementById("btn-tap");
 const toggleButton = document.querySelector("#btn-toggle");
 const playButton = document.getElementById("btn-play");
 const genButton = document.getElementById("btn-generar");
-const timeLog = document.getElementById("time-log");
 const modal = document.querySelector(".modal");
 const score = document.getElementById("score-number");
 const finalScore = document.getElementById("final-score");
@@ -24,6 +23,7 @@ var scoreTotal = errorRate = 0;
 var controlInterval = null;
 var currAnswer = false;
 var variantes = level = 1;
+var firstTry = true;
 
 var audioCtx = null;
 var buffer = null;
@@ -66,6 +66,7 @@ function generateCeryt() {
         frame.style.backgroundColor = "transparent";
         tapBtn.style.zIndex = 1;
         tapBtn.style.opacity = 1;
+        tapBtn.style.backgroundColor = "transparent";
     }
     let beat1 = notasList[Math.round(Math.random() * variantes)];
     let beat2 = notasList[Math.round(Math.random() * variantes)];
@@ -80,6 +81,11 @@ function generateCeryt() {
         <p class="ceryt">${notas[beat4]}</p>`;
     genButton.value = "Generar";
     genButton.classList.remove("continuar");
+    if (firstTry) {
+        genButton.classList.remove("blink");
+        tapBtn.style.zIndex = 1;
+        tapBtn.classList.add("blink");
+    }
 }
 
 function updateSequence() {
@@ -177,6 +183,7 @@ toggleButton.addEventListener(
   () => {
     audioCtx = new AudioContext();
     initBuffer();
+    genButton.classList.add("blink");
     modal.style.opacity = 0;
     modal.style.zIndex = -1;
     },
@@ -211,7 +218,6 @@ function checkPattern() {
         checkTaps(check);
     } else if (lastTap == 0) {
         lastTap = new Date();
-        tapBtn.style.backgroundColor = "limegreen";
         return;
     } else if (delta == 0) {
         delta = currTap - lastTap;
@@ -266,7 +272,6 @@ function checkDelta() {
     if ((currDate - lastTap) > 2000 && !(currAnswer)) {
         wrongAnswer();
         clearInterval(controlInterval);
-        tapBtn.style.backgroundColor = "transparent";
     }
 }
 
@@ -280,12 +285,18 @@ function wrongAnswer() {
     clearInterval(controlInterval);
     sequenceIndex = 0;
     delta = firstTap = lastTap = 0;
+    errorRate /= 2;
     emptyArray(taps);
     wrong.play();
     frame.style.backgroundColor = "rgb(250 9 9 / 70%)";
     setTimeout(() => {
         frame.style.backgroundColor = "transparent";
+        tapBtn.style.backgroundColor = "transparent";
     }, 500);
+    if (firstTry) {
+        tapBtn.classList.remove("blink");
+        firstTry = false;
+    }
 }
 
 function rightAnswer() {
@@ -302,6 +313,10 @@ function rightAnswer() {
     clearInterval(controlInterval);
     sequenceIndex = 0;
     updateLevel();
+    if (firstTry) {
+        tapBtn.classList.remove("blink");
+        firstTry = false;
+    }
 }
 
 function updateLevel() {
@@ -325,7 +340,7 @@ function win() {
     finalScore.innerHTML = `PUNTAJE: ${scoreTotal}`;
     winBkg.style.zIndex = 1;
     winBkg.style.opacity = 1;
-    winBkg.style.width = "500vw";
+    //winBkg.style.width = "500vw";
     winModal.style.zIndex = 2;
     winModal.style.opacity = 1;
 }
@@ -345,17 +360,15 @@ function levelUp() {
 tapBtn.addEventListener("mousedown",
     () => {
         stickPlay();
-        if (pattern.length != 0) {
-            checkPattern();
-        }
+        checkPattern();
     });
 
-window.addEventListener("keydown",
+/* window.addEventListener("keydown",
     (event) => {
         stickPlay();
         if (pattern.length != 0) {
             checkPattern();
         }
     }
-);
+); */
 

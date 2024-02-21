@@ -14,17 +14,15 @@
         <img id="iso" src="/img/drumstickCross.png" alt="palillos cruzados">
         <h4 class="score text-primary">SCORE <br><span id="score-number"></span></h4>
     </div>
-    <div id="tempo-control">
-        
-        <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
-        <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
-    </div>
     <div class="game-wrapper">
         <div id="frame"></div>
+        <input id="btn-tap" type="button" value="TAP">
         <input onclick="generateCeryt()" id="btn-generar" type="button" value="Generar">
         <input id="btn-play" type="button" value="Cómo suena?">
-        <input id="btn-tap" type="button" value="TAP">
-        <p id="time-log"></p>
+        <div id="tempo-control">
+            <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
+            <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
+        </div>
     </div>
 
     <h2 class="centered text-primary" id="level-sign">LEVEL UP</h2>
@@ -41,7 +39,7 @@
     <div id="win-modal">
         <h2 class="centered text-primary">GANASTE!</h2>
         <h5 id="final-score" class="centered text-primary"></h5>
-        <input onclick="location.reload()" style="padding: 9px" type="button" value="Jugar de nuevo">
+        <input id="reload" onclick="location.reload()" type="button" value="Jugar de nuevo">
     </div>
     
     <audio src="./sounds/stick.mp3" id="stick"></audio>
