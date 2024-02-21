@@ -14,6 +14,9 @@ const winModal = document.getElementById("win-modal");
 var pattern = [];
 var sequence = [];
 var taps = [];
+var tapDates = [];
+var ceryt = [];
+let waves = document.querySelectorAll(".wave");
 var globalTempo;
 var tempoM;
 var tolerance = 0;
@@ -86,6 +89,14 @@ function generateCeryt() {
         tapBtn.style.zIndex = 1;
         tapBtn.classList.add("blink");
     }
+    ceryt = document.querySelectorAll(".ceryt");
+    ceryt.forEach(elem => {
+        elem.classList.add("flip");
+        setTimeout(() => {
+            elem.classList.remove("flip")
+        }, 100);
+    })
+    emptyArray(ceryt);
 }
 
 function updateSequence() {
@@ -301,7 +312,7 @@ function wrongAnswer() {
 
 function rightAnswer() {
     right.play();
-    scoreTotal += Math.round(300 - errorRate / 2);
+    scoreTotal += Math.max(Math.round(300 - errorRate / 2), 10);
     errorRate = 0;
     frame.style.backgroundColor = "rgb(9 250 9 / 50%)";
     genButton.value = "Continuar";
@@ -338,9 +349,14 @@ function updateLevel() {
 function win() {
     winSound.play();
     finalScore.innerHTML = `PUNTAJE: ${scoreTotal}`;
+    waves.forEach(elem => {
+        elem.style.animation = `
+            wave ${(Math.random() * 2 + 0.9)}s linear infinite
+        `
+    })
+    winBkg.style.animation = "movingBkg 60s linear infinite";
     winBkg.style.zIndex = 1;
     winBkg.style.opacity = 1;
-    //winBkg.style.width = "500vw";
     winModal.style.zIndex = 2;
     winModal.style.opacity = 1;
 }
@@ -348,13 +364,13 @@ function win() {
 function levelUp() {
     levelup.play();
     levelSign.style.opacity = 1;
-    levelSign.style.transform = "scale(8) translateY(-12vh)";
+    levelSign.style.transform = "scale(7) translateY(-14vh)";
     setTimeout(() => {
         levelSign.style.opacity = 0;
     }, 900);
     setTimeout(() => {
         levelSign.style.transform = "scale(1) translateY(0)";
-    }, 1600);
+    }, 1500);
 }
 
 tapBtn.addEventListener("mousedown",
@@ -362,13 +378,4 @@ tapBtn.addEventListener("mousedown",
         stickPlay();
         checkPattern();
     });
-
-/* window.addEventListener("keydown",
-    (event) => {
-        stickPlay();
-        if (pattern.length != 0) {
-            checkPattern();
-        }
-    }
-); */
 

@@ -131,8 +131,31 @@ h1 {
     font-size: 45px;
     font-weight: 900;
     display: inline;
-    transition: all .1s linear;
     user-select: none;
+}
+
+.ceryt:nth-child(1) {
+    transition: all .4s linear;
+}
+
+.ceryt:nth-child(2) {
+    transition: all .5s linear;
+}
+
+.ceryt:nth-child(3) {
+    transition: all .6s linear;
+}
+
+.ceryt:nth-child(4) {
+    transition: all .7s linear;
+}
+
+.flip {
+    transform: rotateY(270deg) 
+               rotateX(60deg) 
+               translateY(-70px) 
+               translateX(25px);
+    color: white;
 }
 
 #tempo-control {
@@ -200,7 +223,7 @@ input:active {
 }
 
 .continuar {
-    transform: scale(1.6) translateY(-9px);
+    transform: scale(1.2) translateY(-18px);
     box-shadow: 1px 1px 9px inset,
                 -1px -1px 7px darkslategrey inset,
                 0 0 7px 7px limegreen;
@@ -214,7 +237,7 @@ input:active {
 }
 
 #level-sign {
-    transition: all .9s ease-in-out;
+    transition: all 1s ease-in;
     opacity: 0;
     font-size: 20px;
 }
@@ -268,21 +291,18 @@ input:active {
     top: 0;
     width: 100vw;
     height: 100vh;
-    background-image: linear-gradient(45deg,
-        turquoise, orchid, 
-        tomato, indianred,
-        goldenrod, crimson
-    );
-    /* animation: movingBkg 60s linear infinite; */
+    background-color: goldenrod;
     transition: all .7s ease-in-out;
     z-index: -1;
     overflow: hidden;
 }
 
 @keyframes movingBkg {
-    0%{transform: translateX(-400vw)}
-    50%{transform: translateX(0)}
-    100%{transform: translateX(-400vw)}
+    0%{background-color: goldenrod}
+    25%{background-color: orchid}
+    50%{background-color: turquoise}
+    75%{background-color: tomato}
+    100%{background-color: goldenrod}
 }
 
 #win-modal {
@@ -301,6 +321,35 @@ input:active {
     z-index: -1;
 }
 
+#waves {
+    width: 200px;
+    height: 60px;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    opacity: .5;
+}
+
+.wave {
+    width: 7px;
+    height: 45px;
+    margin: 7px;
+    box-shadow: 0 0 7px 3px gainsboro;
+}
+
+@keyframes wave {
+    0% {height: 45px;
+        background-color: azure;}
+    33% {height: 90px;
+        background-color: bisque;}
+    66% {height: 53px;
+        background-color: lavender;}
+    100% {height: 45px;
+        background-color: azure;}
+}
+
 #reload {
     font-size: 18px;
     padding: 18px;
@@ -316,11 +365,23 @@ input:active {
 
     #tempo-control {
         width: 500px;
-    }    
+    } 
+    
+    .continuar {
+        transform: scale(1.6) translateY(-9px);
+    }
 
     .ceryt {
         line-height: 250px;
         font-size: 90px;
+    }
+
+    .flip {
+        transform: rotateY(270deg) 
+                   rotateX(60deg) 
+                   translateY(-100px) 
+                   translateX(50px);
+        color: white;
     }
 
     #win-modal {
@@ -332,6 +393,16 @@ input:active {
         transition: all .9s ease-in-out;
         opacity: 0;
         font-size: 45px;
+    }
+
+    #waves {
+        width: 300px;
+    }
+
+    .wave {
+        width: 9px;
+        margin: 9px;
+        box-shadow: 0 0 9px 3px gainsboro;
     }
     
 }

@@ -20,7 +20,7 @@
         <input onclick="generateCeryt()" id="btn-generar" type="button" value="Generar">
         <input id="btn-play" type="button" value="Cómo suena?">
         <div id="tempo-control">
-            <input type="range" id="tempo" name="tempo" min="60" max="120" oninput="showTempo(this.value)">
+            <input type="range" id="tempo" name="tempo" min="30" max="90" oninput="showTempo(this.value)">
             <label class="text-primary centered" id="tempo-label" for="tempo">TEMPO</label>
         </div>
     </div>
@@ -37,6 +37,17 @@
 
     <div id="win-bkg"></div>
     <div id="win-modal">
+        <div id="waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
         <h2 class="centered text-primary">GANASTE!</h2>
         <h5 id="final-score" class="centered text-primary"></h5>
         <input id="reload" onclick="location.reload()" type="button" value="Jugar de nuevo">
