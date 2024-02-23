@@ -26,8 +26,6 @@
         </div>
     </div>
 
-    <h2 class="centered text-primary" id="level-sign">LEVEL UP</h2>
-
     <div id="win-bkg"></div>
     <div id="win-modal">
         <div id="waves">
@@ -43,7 +41,15 @@
         </div>
         <h2 class="centered text-primary">GANASTE!</h2>
         <h5 id="final-score" class="centered text-primary"></h5>
-        <input id="reload" onclick="location.reload()" type="button" value="Jugar de nuevo">
+        <div id="score-log">
+            <form id="score-form">
+                <label class="score-text" for="score-name">REGISTRAR PUNTAJE</label>
+                <input type="text" id="score-name" name="score-name" placeholder="INGRESA TU NOMBRE">
+                <input class="win-btn" type="submit" id="score-submit" value="ENVIAR">
+            </form>
+            <hr>
+        </div>
+        <input id="reload" class="win-btn" onclick="location.reload()" type="button" value="JUGAR DE NUEVO">
     </div>
     
     <div id="tuto-layer"></div>
@@ -51,7 +57,7 @@
         <p id="tuto-window"></p>
         <h3 id="btn-tuto">TUTORIAL</h3>
         <h3 id="curr-page"></h3>
-        <span id="prev">&#8619;</span><span id="next">&#8620;</span>
+        <span id="prev">&#8610;</span><span id="next">&#8611;</span>
         <h3 id="btn-ok">OK</h3>
     </div>
 
@@ -62,6 +68,8 @@
             <input type="button" id="btn-toggle" value="Jugar CeRyt &#9658;">
         </div>
     </div>
+
+    <h2 class="centered text-primary" id="level-sign">LEVEL UP</h2>
     
     <audio src="./sounds/stick.mp3" id="stick"></audio>
     <audio src="./sounds/right.mp3" id="right"></audio>

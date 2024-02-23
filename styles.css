@@ -17,6 +17,12 @@ h1 {
     margin: 50px auto;
 }
 
+hr {
+    background-color: rgba(250,250,250,.5);
+    height: 2px;
+    border: none;
+}
+
 .text-primary {
     color: rgb(250 250 250);
 }
@@ -237,6 +243,10 @@ input:active {
 }
 
 #level-sign {
+    position: absolute;
+    bottom: 150px;
+    left: 0;
+    right: 0;
     transition: all 1s ease-in;
     opacity: 0;
     font-size: 20px;
@@ -245,11 +255,11 @@ input:active {
 .modal {
     width: 100vw;
     height: 105vh;
-    background-color: rgb(9 9 9 / 70%);
+    background-color: rgb(9 9 9 / 90%);
     position: absolute;
     left: 0;
     top: 0;
-    transition: all .3s ease-out;
+    transition: all .9s ease-in;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,11 +270,13 @@ input:active {
     width: 300px;
     height: 300px;
     background-color: rgb(160 180 200 / 90%);
+    transition: all .3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     border-radius: 9px;
+    padding: 18px;
 }
 
 #modal-img {
@@ -321,6 +333,78 @@ input:active {
     z-index: -1;
 }
 
+#score-log {
+    margin: 0 10px;
+}
+
+#score-form {
+    transition: opacity .5s linear;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.score-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+}
+
+#score-name {
+    border: 1px solid rgba(250,250,250,.7);
+    border-radius: 0;
+    width: 200px;
+    box-shadow: none;
+    background-color: rgba(250,250,250,.3);
+    font-size: 18px;
+    line-height: 27px;
+}
+
+#score-name::placeholder {
+    font-size: 16px;
+}
+
+#score-table {
+    border: 1px solid rgba(250,250,250,.3);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    padding: 12px 18px;
+}
+
+#score-table-title {
+    color: white;
+    font-size: 21px;
+    font-weight: 900;
+    text-align: center;
+    margin: 9px;
+}
+
+#score-table-header, .score-entry {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 9px;
+}
+
+.score-entry > h5 {
+    margin: 0;
+    font-weight: 100;
+    color: white;
+    font-size: 18px;
+}
+
+@keyframes textBlink {
+    0% {color: silver;}
+    50% {color: white;}
+    100% {color: silver;}
+}
+
 #waves {
     width: 200px;
     height: 60px;
@@ -350,9 +434,9 @@ input:active {
         background-color: azure;}
 }
 
-#reload {
+.win-btn {
     font-size: 18px;
-    padding: 18px;
+    padding: 12px 18px;
     background-color: rgb(120 180 180 / 50%);
 }
 
@@ -363,7 +447,7 @@ input:active {
         to bottom,
         transparent,
         transparent,
-        rgba(9,9,9,.5)
+        rgba(9,9,9,.9)
         );
     position: absolute;
     left: 0;
@@ -402,7 +486,6 @@ input:active {
     transform: translateY(100px);
 }
 
-
 #btn-ok {
     color: white;
     line-height: 50px;
@@ -439,7 +522,12 @@ input:active {
     padding: 9px;
     border-radius: 3px;
     transform: translateY(100px);
-    transition: all .7s ease;
+    transition: transform .7s ease,
+                color .2s ease-out;
+}
+
+#prev:active, #next:active {
+    color: slategray;
 }
 
 @media only screen and (min-width: 768px) {
@@ -454,7 +542,6 @@ input:active {
 
     #frame { 
         width: 700px;
-        max-height: 20%;
         height: 250px;
         margin-top: 90px;
     }
@@ -490,8 +577,6 @@ input:active {
     }
 
     #level-sign {
-        transition: all .9s ease-in-out;
-        opacity: 0;
         font-size: 45px;
     }
 
@@ -508,6 +593,22 @@ input:active {
     #tuto-control, #tuto-window {
         left: 30px;
         right: auto;
+    }
+
+    #tuto-layer {
+        background-image: linear-gradient(
+        to left bottom,
+        transparent,
+        transparent,
+        rgba(9,9,9,.5)
+        );
+    }
+
+    #score-label {
+        color: white;
+        font-size: 25px;
+        transition: opacity .7s linear;
+        text-align: center;
     }
     
 }

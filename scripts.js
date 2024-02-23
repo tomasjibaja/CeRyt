@@ -5,6 +5,7 @@ const toggleButton = document.querySelector("#btn-toggle");
 const playButton = document.getElementById("btn-play");
 const genButton = document.getElementById("btn-generar");
 const modal = document.querySelector(".modal");
+const modalMsg = document.querySelector(".modal-msg");
 const tutoCtrl = document.getElementById("tuto-control");
 const tutoBtn = document.getElementById("btn-tuto");
 const tutoPrev = document.getElementById("prev");
@@ -18,6 +19,9 @@ const finalScore = document.getElementById("final-score");
 const levelSign = document.getElementById("level-sign");
 const winBkg = document.getElementById("win-bkg");
 const winModal = document.getElementById("win-modal");
+const scoreForm = document.getElementById("score-form");
+const scoreLog = document.getElementById("score-log");
+const scoreName = document.getElementById("score-name");
     
 var pattern = [];
 var sequence = [];
@@ -25,6 +29,8 @@ var taps = [];
 var tapDates = [];
 var ceryt = [];
 var page = 0;
+var rightCeryts = 0;
+var autoP = false;
 
 var waves = document.querySelectorAll(".wave");
 var globalTempo;
@@ -37,6 +43,7 @@ var controlInterval = null;
 var currAnswer = false;
 var variantes = level = 1;
 var firstTry = true;
+var nombre = "";
 
 var audioCtx = null;
 var buffer = null;
@@ -155,6 +162,34 @@ function stickPlay(delay) {
     source.start(audioCtx.currentTime + delay);
 }
 
+function autoPlay(playRate) {
+    autoP = true;
+    autoPlayLoop(playRate);
+}
+
+function autoPlayLoop(playRate, ) {
+    playRate ??= 1;
+    playRate = Math.min(Math.max(1, Math.abs(playRate)), 5);
+    let autoPlayTime = 1200;
+    generateCeryt();
+    sequence.forEach(elem => {
+        setTimeout(() => {
+        stickPlay();
+        checkPattern();
+        }, autoPlayTime);
+        autoPlayTime += elem * tempoM * (1000 / playRate);
+    })
+    if (rightCeryts != 21 && autoP) {
+        setTimeout(() => {
+            autoPlayLoop(playRate);
+        }, autoPlayTime + 300);
+    }
+}
+
+function stopAutoPlay() {
+    autoP = false;
+}
+
 // EJECUTAR PATRON
 function playPattern(array) {
     let totalTime = 0;
@@ -213,6 +248,7 @@ toggleButton.addEventListener(
     audioCtx = new AudioContext();
     initBuffer();
     genButton.classList.add("blink");
+    modalMsg.style.transform = "scale(0)";
     modal.style.opacity = 0;
     modal.style.zIndex = -1;
     },
@@ -332,6 +368,7 @@ function rightAnswer() {
     right.play();
     scoreTotal += Math.max(Math.round(300 - errorRate / 2), 10);
     errorRate = 0;
+    rightCeryts++;
     frame.style.backgroundColor = "rgb(9 250 9 / 50%)";
     genButton.value = "Continuar";
     genButton.classList.add("continuar");
@@ -349,14 +386,14 @@ function rightAnswer() {
 }
 
 function updateLevel() {
-    if (scoreTotal > 3000 && level == 3) {
+    if (rightCeryts > 21 && level == 3) {
         win();
-    } else if (scoreTotal > 2000 && level < 3) {
+    } else if (rightCeryts > 14 && level < 3) {
         variantes = level = 3;
         document.body.style.backgroundImage =
         "linear-gradient(45deg, fuchsia, tomato, indianred)";
         levelUp();
-    } else if (scoreTotal > 1000 && level < 2) {
+    } else if (rightCeryts > 7 && level < 2) {
         variantes = level = 2;
         document.body.style.backgroundImage =
         "linear-gradient(45deg, goldenrod, orange, crimson)";
@@ -376,6 +413,69 @@ function win() {
     winBkg.style.zIndex = 1;
     winBkg.style.opacity = 1;
     winModal.style.zIndex = 2;
+    winModal.style.opacity = 1;
+}
+
+function submitForm(e) {
+    e.preventDefault();
+    nombre = scoreName.value;
+    scoreForm.style.opacity = 0;
+    setTimeout(() => {
+        scoreForm.innerHTML = `<h5 class="score-text">PUNTAJE REGISTRADO</h5>
+        <input class="win-btn" type="button" id="score-table-btn" value="TABLA DE POSICIONES">`;
+        scoreForm.style.opacity = 1;
+        var scoreTableButton = document.getElementById("score-table-btn");
+        scoreTableButton.addEventListener("click", () => {
+            winModal.style.opacity = 0;
+            setTimeout(() => {
+                showScores();
+            }, 700);
+        })
+    }, 500);
+}
+
+scoreForm.addEventListener("submit", (event) => {
+    submitForm(event);
+})
+
+function showScores() {
+    winModal.innerHTML =
+    `<h4 id="score-table-title">TABLA DE POSICIONES</h4>
+    <div id="score-table">
+        <div id="score-table-header">
+            <h5 class="score-text">NOMBRE</h5>
+            <h5 class="score-text">PUNTAJE</h5>
+        </div>
+        <div class="score-entry">
+            <h5>${nombre}</h5><h5>${scoreTotal}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Pedro</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Marta</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Norma</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Mabel</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Rosita</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Elena</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Edith</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+        <div class="score-entry">
+            <h5>Susana</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+        </div>
+    </div>
+    <hr>
+    <input id="reload" class="win-btn" onclick="location.reload()" type="button" value="JUGAR DE NUEVO">`;
     winModal.style.opacity = 1;
 }
 
@@ -442,9 +542,11 @@ function updateBlink() {
             break;
         case 2:
             tapBtn.classList.add("blink");
+            tutoOk.style.backgroundColor = ""
             break;
         case 3:
             playButton.classList.add("blink");
+            tutoOk.style.backgroundColor = "rgba(200,200,200,.3)"
             break;
     }
 }
@@ -460,6 +562,12 @@ tutoOk.addEventListener("click",
         removeBlink();
         tutoLayer.style.zIndex = "-1";
         tutoLayer.style.opacity = 0;
+        setTimeout(() => {
+            page = 0;
+            tutoOk.style.backgroundColor = ""
+            tutoWindow.innerHTML = pages[page];
+            currPage.innerHTML = `${page + 1} / 4`;
+        }, 500);
     });
 
 tapBtn.addEventListener("mousedown",
