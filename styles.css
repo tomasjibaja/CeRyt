@@ -31,58 +31,6 @@ hr {
     text-align: center;
 }
 
-.shining {
-    filter: drop-shadow(0 0 1px black);
-    animation: shine 3s linear infinite;
-    animation: glit 4.5s ease-in-out infinite;
-}
-
-@keyframes shine {
-    0% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(-3px -3px 3px azure);
-    }
-    25% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(3px -3px 7px azure);
-    }
-    50% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(3px 3px 5px azure);
-    }
-    75% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(-3px 3px 7px azure);
-    }
-    100% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(-3px -3px 3px azure);
-    }
-}
-
-@keyframes glit {
-    0% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(3px -3px 5px ghostwhite);
-    }
-    25% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(3px 3px 9px ghostwhite);
-    }
-    50% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(-3px 3px 7px ghostwhite);
-    }
-    75% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(-3px -3px 9px ghostwhite);
-    }
-    100% {
-        filter: drop-shadow(0 0 1px black)
-                drop-shadow(3px -3px 5px ghostwhite);
-    }
-}
-
 .blink {
     animation: blink .7s linear infinite;
 }
@@ -242,6 +190,24 @@ input:active {
     font-size: 16px;
 }
 
+#arrow {
+    border-right: 25px solid tomato;
+    border-left: 25px solid transparent;
+    border-top: 25px solid transparent;
+    position: absolute;
+    left: -100px;
+    transition: all .5s ease;
+}
+
+@keyframes arrowpoint {
+    0% {transform: translate(-9px, -9px);
+        filter: drop-shadow(6px 6px 7px rgba(90,30,30,.5));}
+    50% {transform: translate(-18px, -18px);
+        filter: drop-shadow(18px 18px 18px rgba(90,30,30,.5));}
+    100% {transform: translate(-9px, -9px);
+        filter: drop-shadow(6px 6px 7px rgba(90,30,30,.5));}
+}
+
 #level-sign {
     position: absolute;
     bottom: -150px;
@@ -281,19 +247,19 @@ input:active {
 
 #modal-img {
     width: 160px;
-    animation: jump 3s linear infinite;
-}
-
-#btn-toggle {
-    width: 150px;
-    height: 45px;
-    font-size: 16px;
+    animation: jump 3s linear 3;
 }
 
 @keyframes jump {
     0% {transform: translateY(0) scale(1);}
     70% {transform: translateY(-7px) scale(1.1);}
     100% {transform: translateY(0) scale(1);}
+}
+
+#btn-toggle {
+    width: 150px;
+    height: 45px;
+    font-size: 16px;
 }
 
 #win-bkg {

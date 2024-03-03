@@ -11,6 +11,7 @@ const tutoBtn = document.getElementById("btn-tuto");
 const tutoPrev = document.getElementById("prev");
 const tutoNext = document.getElementById("next");
 const currPage = document.getElementById("curr-page");
+const arrow = document.getElementById("arrow");
 const tutoOk = document.getElementById("btn-ok");
 const tutoWindow = document.getElementById("tuto-window");
 const tutoLayer = document.getElementById("tuto-layer");
@@ -494,6 +495,8 @@ function levelUp() {
 function tutorial() {
     removeBlink();
     updateBlink();
+    arrow.style.left = genButton.getBoundingClientRect().left + "px";
+    arrow.style.animation = "arrowpoint .7s ease-in-out infinite";
     tutoBtn.style.color = "rgb(250 250 250 / 30%)";
     tutoWindow.style.transform = "translateY(0)";
     tutoPrev.style.transform = "translateY(0)";
@@ -536,15 +539,23 @@ function updateBlink() {
     switch (page) {
         case 0:
             genButton.classList.add("blink");
+            arrow.style.left = genButton.getBoundingClientRect().left + "px";
+            arrow.style.top = genButton.getBoundingClientRect().top + "px";
             break;
         case 1:
+            arrow.style.left = frame.getBoundingClientRect().left + "px";
+            arrow.style.top = frame.getBoundingClientRect().top + "px";
             frame.classList.add("blink");
             break;
         case 2:
+            arrow.style.left = tapBtn.getBoundingClientRect().left + "px";
+            arrow.style.top = tapBtn.getBoundingClientRect().top + "px";
             tapBtn.classList.add("blink");
             tutoOk.style.backgroundColor = ""
             break;
         case 3:
+            arrow.style.left = playButton.getBoundingClientRect().left + "px";
+            arrow.style.top = playButton.getBoundingClientRect().top + "px";
             playButton.classList.add("blink");
             tutoOk.style.backgroundColor = "rgba(200,200,200,.3)"
             break;
@@ -553,6 +564,8 @@ function updateBlink() {
  
 tutoOk.addEventListener("click",
     () => {
+        arrow.style.left = "-100px";
+        arrow.style.animation = "";
         tutoWindow.style.transform = "translateY(250px)";
         tutoPrev.style.transform = "translateY(100px)";
         tutoNext.style.transform = "translateY(100px)";
