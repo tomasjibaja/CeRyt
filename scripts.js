@@ -482,7 +482,7 @@ function showScores() {
 function levelUp() {
     levelup.play();
     levelSign.style.opacity = 1;
-    levelSign.style.transform = "scale(7) translateY(-14vh)";
+    levelSign.style.transform = "scale(7) translateY(-18vh)";
     setTimeout(() => {
         levelSign.style.opacity = 0;
     }, 900);
@@ -572,7 +572,7 @@ tutoOk.addEventListener("click",
 
 tapBtn.addEventListener("mousedown",
     () => {
-        stickPlay();
+        // stickPlay();
         checkPattern();
     });
 
