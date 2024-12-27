@@ -23,6 +23,7 @@ const winModal = document.getElementById("win-modal");
 const scoreForm = document.getElementById("score-form");
 const scoreLog = document.getElementById("score-log");
 const scoreName = document.getElementById("score-name");
+const API_URL = 'http://ceryt0-backend.vercel.app';
     
 var pattern = [];
 var sequence = [];
@@ -421,6 +422,20 @@ function submitForm(e) {
     e.preventDefault();
     nombre = scoreName.value;
     scoreForm.style.opacity = 0;
+
+    const scoreData = {
+        name: nombre,
+        score: scoreTotal
+    }
+
+    fetch(API_URL + '/add-scoremark', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(scoreData)
+    })
+
     setTimeout(() => {
         scoreForm.innerHTML = `<h5 class="score-text">PUNTAJE REGISTRADO</h5>
         <input class="win-btn" type="button" id="score-table-btn" value="TABLA DE POSICIONES">`;
@@ -440,44 +455,80 @@ scoreForm.addEventListener("submit", (event) => {
 })
 
 function showScores() {
+    fetch(API_URL + '/scoremarks')
+        .then(res => res.json())
+        .then(data => {
+            listScoremarks(data);
+        })
+
+    // winModal.innerHTML =
+    // `<h4 id="score-table-title">TABLA DE POSICIONES</h4>
+    // <div id="score-table">
+    //     <div id="score-table-header">
+    //         <h5 class="score-text">NOMBRE</h5>
+    //         <h5 class="score-text">PUNTAJE</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>${nombre}</h5><h5>${scoreTotal}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Pedro</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Marta</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Norma</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Mabel</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Rosita</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Elena</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Edith</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    //     <div class="score-entry">
+    //         <h5>Susana</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
+    //     </div>
+    // </div>
+    // <hr>
+    // <input id="reload" class="win-btn" onclick="location.reload()" type="button" value="JUGAR DE NUEVO">`;
+
+    winModal.style.opacity = 1;
+}
+
+function listScoremarks(array) {
+    let table = '';
+
+    array.forEach((elem) => {
+        const date = new Date(elem.createdAt)
+        const entry = `
+        <div class="score-entry">
+            <h5>${elem.name}</h5>
+            <h5>${elem.score}</h5>
+            <h5>${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}</h5>
+        </div>
+        `;
+        table += entry;
+    })
+
     winModal.innerHTML =
     `<h4 id="score-table-title">TABLA DE POSICIONES</h4>
     <div id="score-table">
         <div id="score-table-header">
             <h5 class="score-text">NOMBRE</h5>
             <h5 class="score-text">PUNTAJE</h5>
+            <h5 class="score-text">FECHA</h5>
         </div>
-        <div class="score-entry">
-            <h5>${nombre}</h5><h5>${scoreTotal}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Pedro</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Marta</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Norma</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Mabel</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Rosita</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Elena</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Edith</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
-        <div class="score-entry">
-            <h5>Susana</h5><h5>${Math.round(Math.random() * 3000 + 1500)}</h5>
-        </div>
+        ${table}
     </div>
     <hr>
     <input id="reload" class="win-btn" onclick="location.reload()" type="button" value="JUGAR DE NUEVO">`;
-    winModal.style.opacity = 1;
 }
 
 function levelUp() {
