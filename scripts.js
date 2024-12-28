@@ -23,7 +23,7 @@ const winModal = document.getElementById("win-modal");
 const scoreForm = document.getElementById("score-form");
 const scoreLog = document.getElementById("score-log");
 const scoreName = document.getElementById("score-name");
-const API_URL = 'http://ceryt0-backend.vercel.app';
+const API_URL = 'https://ceryt0-backend.vercel.app';
     
 var pattern = [];
 var sequence = [];
