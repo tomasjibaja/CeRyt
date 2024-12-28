@@ -32,7 +32,7 @@ Hi 👋, I'm Tomas Jibaja, a self-taught developer always looking to improve mys
 
 ### Let's connect:
 <p align="left">
-<a href="https://linkedin.com/in/in/tomas-jibaja" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="in/tomas-jibaja" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/tomas-jibaja" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="in/tomas-jibaja" height="30" width="40" /></a>
 </p>
 
 
