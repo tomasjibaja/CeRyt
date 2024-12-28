@@ -1,5 +1,5 @@
 # Ceryt
-A game made with HTML, CSS and Vanilla Javascript to learn and practice rhytmic cells. It has a tutorial to learn how to use it, a score system and a table of scores.
+A game for learning and practicing rhytmic cells made with HTML, CSS and Vanilla Javascript. It has a tutorial to learn how to use it, a score system and a table of scores that features a simple API made with NodeJS/MongoDB.
 
 ### Used technologies
 <p align="left" textDecoration='none'> 
@@ -15,6 +15,12 @@ A game made with HTML, CSS and Vanilla Javascript to learn and practice rhytmic 
   <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> 
     <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> 
   </a> 
+  <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> 
+  </a>
+  <a href="https://nodejs.org" target="_blank" rel="noreferrer"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> 
+  </a>
 </p>
 
 ## About me
