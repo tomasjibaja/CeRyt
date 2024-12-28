@@ -26,7 +26,7 @@ A game for learning and practicing rhytmic cells made with HTML, CSS and Vanilla
 ## About me
 Hi 👋, I'm Tomas Jibaja, a self-taught developer always looking to improve myself and make awesome stuff.
 
-👨‍💻 All of my projects are available at [tjdev.vercel.app](tjdev.vercel.app)
+👨‍💻 All of my projects are available at <a href="https://tjdev.vercel.app" target="_blank">tjdev.vercel.app</a>
 
 📫 You can reach me at **tomasjibaja@gmail.com**
 
