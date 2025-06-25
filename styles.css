@@ -341,7 +341,7 @@ form {
     flex-direction: column;
     margin: 20px 0;
     padding: 12px 18px;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 #score-table-title {
@@ -597,5 +597,8 @@ form {
         transition: opacity .7s linear;
         text-align: center;
     }
-    
+
+    #score-table {
+        width: 100%;
+    }    
 }
