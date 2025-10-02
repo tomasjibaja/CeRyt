@@ -576,13 +576,36 @@ function showScores() {
 
 function listScoremarks(array) {
     let table = '';
+    let counter = 1;
+    let badge = '';
+    let position = '';
 
     array.forEach((elem) => {
+        switch (counter) {
+            case 1:
+                badge = '🥇';
+                position = 'first'
+                counter++;
+                break;
+            case 2:
+                badge = '🥈';
+                position = 'second'
+                counter++;
+                break;
+            case 3:
+                badge = '🥉';
+                position = 'third'
+                counter++;
+                break;
+            default:
+                badge = '';
+                position = ''
+        }
         const date = new Date(elem.createdAt)
         const entry = `
-        <div class="score-entry">
+        <div class="score-entry ${position}">
             <h5>${elem.name}</h5>
-            <h5>${elem.score}</h5>
+            <h5>${elem.score} <span>${badge}</span></h5>
             <h5>${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}</h5>
         </div>
         `;
