@@ -5,7 +5,9 @@ const toggleButton = document.querySelector("#btn-toggle");
 const playButton = document.getElementById("btn-play");
 const genButton = document.getElementById("btn-generar");
 const modal = document.querySelector(".modal");
+const scoretableModal = document.querySelector(".scoretable-modal");
 const modalMsg = document.querySelector(".modal-msg");
+const scoreToggle = document.querySelector(".score");
 const tutoCtrl = document.getElementById("tuto-control");
 const tutoBtn = document.getElementById("btn-tuto");
 const tutoPrev = document.getElementById("prev");
@@ -454,6 +456,76 @@ scoreForm.addEventListener("submit", (event) => {
     submitForm(event);
 })
 
+function showScoresOnly() {
+    fetch(API_URL + '/scoremarks')
+        .then(res => res.json())
+        .then(data => {
+            listScoremarksOnly(data);
+        })
+    
+        scoretableModal.style.opacity = 1;
+        scoretableModal.style.zIndex = 10;
+}
+
+function listScoremarksOnly(array) {
+    let table = '';
+    let counter = 1;
+    let badge = '';
+    let position = '';
+
+    array.forEach((elem) => {
+        switch (counter) {
+            case 1:
+                badge = '🥇';
+                position = 'first'
+                counter++;
+                break;
+            case 2:
+                badge = '🥈';
+                position = 'second'
+                counter++;
+                break;
+            case 3:
+                badge = '🥉';
+                position = 'third'
+                counter++;
+                break;
+            default:
+                badge = '';
+                position = ''
+        }
+        const date = new Date(elem.createdAt)
+        const entry = `
+        <div class="score-entry ${position}">
+            <h5>${elem.name}</h5>
+            <h5>${elem.score} <span>${badge}</span></h5>
+            <h5>${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}</h5>
+        </div>
+        `;
+        table += entry;
+    })
+
+    scoretableModal.innerHTML =
+    `<h4 id="score-table-title">TABLA DE POSICIONES</h4>
+    <div id="score-table">
+        <div id="score-table-header">
+            <h5 class="score-text">NOMBRE</h5>
+            <h5 class="score-text">PUNTAJE</h5>
+            <h5 class="score-text">FECHA</h5>
+        </div>
+        <div class='score-entry'></div>
+        <div class='score-entry'></div>
+        ${table}
+    </div>
+    <input id="reload" class="win-btn" onclick="closeScoretable()" type="button" value="VOLVER">`;
+}
+
+function closeScoretable() {
+    scoretableModal.style.opacity = 0;
+    scoretableModal.style.zIndex = 0;
+    scoretableModal.innerHTML = '';
+}
+
 function showScores() {
     fetch(API_URL + '/scoremarks')
         .then(res => res.json())
@@ -525,10 +597,13 @@ function listScoremarks(array) {
             <h5 class="score-text">PUNTAJE</h5>
             <h5 class="score-text">FECHA</h5>
         </div>
+        <div class='score-entry'></div>
+        <div class='score-entry'></div>
         ${table}
     </div>
-    <hr>
     <input id="reload" class="win-btn" onclick="location.reload()" type="button" value="JUGAR DE NUEVO">`;
+
+    scoreToggle.style.zIndex = 0;
 }
 
 function levelUp() {
